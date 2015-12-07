@@ -1,9 +1,30 @@
+/**
+ * Spectrogram Android application
+ * Copyright (c) 2013 Guillaume Adam  http://www.galmiza.net/
+
+ * This software is provided 'as-is', without any express or implied warranty.
+ * In no event will the authors be held liable for any damages arising from the use of this software.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it freely,
+ * subject to the following restrictions:
+
+ * 1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+ */
+
 package net.galmiza.android.spectrogram;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder.AudioSource;
 
+/**
+ * Recording service
+ * Methods prepare/release initiates/releases the service and must be the very first/last calls
+ * Methods start/stop starts/stop the recording service in an independent thread
+ * Recorded samples are sent to the listener passed as parameter of @method start
+ */
 public class ContinuousRecord {
 	
 	// Attributes
@@ -26,9 +47,10 @@ public class ContinuousRecord {
 	}
 	
 	/**
-	 * Prepare recording service
-	 * The buffer size can be forced to be multiple of the param (size in sample count)
-	 * Param multiple is ineffective if set to 1
+	 * Initiate the recording service
+	 * The service is then ready to start recording
+	 * The buffer size can be forced to be multiple of @param multiple (size in sample count)
+	 * @param multiple is ineffective if set to 1
 	 */
 	public void prepare(int multiple) {
 		
@@ -47,12 +69,17 @@ public class ContinuousRecord {
 	    audioRecord = new AudioRecord(AudioSource.MIC, samplingRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, recordLength*BYTES_PER_SHORT);
 	}
 	
-	// Listener
+	/**
+	 *  Listener prototype used in the @method start
+	 */
 	public static interface OnBufferReadyListener {
         void onBufferReady(short[] buffer);
     }
 	
-	// Start recording
+	/**
+	 * Start recording in a independent thread
+	 * @param listener is call every time a sample is ready
+	 */
 	public void start(final OnBufferReadyListener listener) {
 		if (!run && audioRecord!=null) {
 			run = true;
@@ -74,7 +101,11 @@ public class ContinuousRecord {
 		}
 	}
 	
-	// Stop recording
+	/**
+	 * Stop recording
+	 * Notifies the thread to stop and wait until it stops
+	 * Also stops the recording service
+	 */
 	public void stop() {
 		if (run && audioRecord!=null) {
 			//Log.d("ContinuousRecord","Stopping service...");
@@ -86,7 +117,10 @@ public class ContinuousRecord {
 		}
 	}
 	
-	// Leave recording service
+	/**
+	 * Destroys the recording service
+	 * @method start and @method stop should then not be called
+	 */
 	public void release() {
 		if (!run && audioRecord!=null)
 			audioRecord.release();

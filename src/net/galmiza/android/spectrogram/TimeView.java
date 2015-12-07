@@ -1,3 +1,18 @@
+/**
+ * Spectrogram Android application
+ * Copyright (c) 2013 Guillaume Adam  http://www.galmiza.net/
+
+ * This software is provided 'as-is', without any express or implied warranty.
+ * In no event will the authors be held liable for any damages arising from the use of this software.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it freely,
+ * subject to the following restrictions:
+
+ * 1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+ */
+
 package net.galmiza.android.spectrogram;
 
 import net.galmiza.android.spectrogram.Misc;
@@ -12,6 +27,11 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+/**
+ * Class associated with the wave form view
+ * Handles events:
+ *  onTouchEvent, onScroll, onDraw
+ */
 public class TimeView extends View {
 	
 	// Attributes
@@ -31,6 +51,9 @@ public class TimeView extends View {
         detector = new GestureDetector(getContext(), new GestureListener());
     }
     
+    /**
+     * Touch event handling
+     */
     @SuppressLint("ClickableViewAccessibility")
 	@Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -38,7 +61,6 @@ public class TimeView extends View {
 	    invalidate();
 	    return true;
     }
-    
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
     	@Override
         public boolean onScroll (MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
@@ -47,6 +69,9 @@ public class TimeView extends View {
         }
     }
     
+    /**
+     * Simple sets
+     */
     public void setFFTResolution(int res) {
     	fftResolution = res;
     	wave = new float[res];
@@ -55,6 +80,10 @@ public class TimeView extends View {
     	System.arraycopy(w, 0, wave, 0, w.length);
     }
 
+    /**
+     * Called whenever a redraw is needed
+     * Renders wave form as a series of lines
+     */
     @Override
     public void onDraw(Canvas canvas) {
     	int width = canvas.getWidth();

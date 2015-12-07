@@ -1,3 +1,18 @@
+/**
+ * Spectrogram Android application
+ * Copyright (c) 2013 Guillaume Adam  http://www.galmiza.net/
+
+ * This software is provided 'as-is', without any express or implied warranty.
+ * In no event will the authors be held liable for any damages arising from the use of this software.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it freely,
+ * subject to the following restrictions:
+
+ * 1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+ */
+
 package net.galmiza.android.spectrogram;
 
 
@@ -8,6 +23,11 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
+/**
+ * Renders preferences as defined in xml/preferences.xml
+ * Formats text using string patterns defined in values-xx/string.xml
+ * Note that activity is registered as activity in the manifest file AndroidManifest.xml
+ */
 public class PreferencesActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 	@SuppressWarnings("deprecation")
 	@Override
@@ -15,7 +35,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
 		
-		// Init values?
+		// Init values
 	    
 	    // Run update
 	    getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
@@ -24,8 +44,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 	
 	/**
 	 * UpdateConfiguration
-	 * Map items of ressourceId to several arrays string[3] = type, key, pattern
-	 * Thus array dimension should be multiple of 3
+	 * Map items of ressourceId to several arrays string[3] = type, key, pattern defined in string.xml
 	 * Replaces summary of preference 'key' by 'pattern' taking current value as input 
 	 */
 	@SuppressWarnings("deprecation")
@@ -50,7 +69,6 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 			if (object.equals("title")) preference.setTitle(text);
 		}
 	}
-	
 	public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
 		// Whatever the change is, update all!
 		UpdateConfiguration(R.array.preferences_configuration);

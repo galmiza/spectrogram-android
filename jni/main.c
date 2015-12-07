@@ -28,7 +28,7 @@ float fsin[N_WAVE];					/* populated at runtime */
  */
 void init_fsin(void) {
 	for (int i=0; i<N_WAVE; i++)
-		fsin[i] = sinf(2*Pi/N_WAVE*i); // calcuated once, no need to optimize
+		fsin[i] = sinf(2*Pi/N_WAVE*i); // calculated once, no need to optimize
 }
 
 /*
@@ -127,7 +127,7 @@ int fft(float* fr, float* fi, unsigned int m, int inverse) {
 }
 
 /*
- * Window functions there (algorithm from wikipedia!)
+ * Window functions there (algorithms from Wikipedia!)
  */
 void window_rectangular(float* fr, unsigned int n) {}
 void window_triangular(float* fr, unsigned int n) {
@@ -189,7 +189,7 @@ void get_mean_frequency(float* io, float* m, int n) {
 }
 
 /*
- * Convert between cartesian and polar bases
+ * Convertions between cartesian and polar bases
  */
 void to_polar(float* re, float* im, int n) {
 	float re_i, im_i;
@@ -200,7 +200,6 @@ void to_polar(float* re, float* im, int n) {
 		im[i] = atan2(im_i, re_i);
 	}
 }
-
 void to_cartesian(float* re, float* im, int n) {
 	float re_i, im_i;
 	unsigned int i;//,j,k;
@@ -222,7 +221,6 @@ void short_to_float(short* s, float* f, int n) {
 		f[i] = (float)(s[i])/m;
 	}
 }
-
 void float_to_short(float* f, short* s, int n) {
 	float m = 32767;
 	for (int i=0; i<n; i++) {
@@ -236,7 +234,6 @@ void float_to_short(float* f, short* s, int n) {
 void clear_short(short* s, int n) {
 	memset(s, 0, n*sizeof(short));
 }
-
 void clear_float(float* f, int n) {
 	memset(f, 0, n*sizeof(float));
 }

@@ -1,3 +1,17 @@
+/**
+ * Spectrogram Android application
+ * Copyright (c) 2013 Guillaume Adam  http://www.galmiza.net/
+
+ * This software is provided 'as-is', without any express or implied warranty.
+ * In no event will the authors be held liable for any damages arising from the use of this software.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it freely,
+ * subject to the following restrictions:
+
+ * 1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+ */
 
 package net.galmiza.android.spectrogram;
 
@@ -18,6 +32,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * Entry point of the application
+ * Handles:
+ *  recording service
+ *  fft processing by calling native functions
+ *  view updates
+ *  activity events:
+ *   onCreate, onDestroy,
+ *   onCreateOptionsMenu, onOptionsItemSelected, (top menu banner)
+ *   onActivityResult (response from external activities)
+ */
 public class SpectrogramActivity extends ActionBarActivity {
 	
 	// Constant
@@ -131,7 +156,7 @@ public class SpectrogramActivity extends ActionBarActivity {
 	}
 	
 	/**
-	 * Control recorder
+	 * Control recording service
 	 */
 	private void startRecording() {
 		recorder.start(new OnBufferReadyListener() {
@@ -145,6 +170,9 @@ public class SpectrogramActivity extends ActionBarActivity {
 		recorder.stop();
 	}
 
+	/**
+	 * Handles interactions with the menu
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -175,6 +203,9 @@ public class SpectrogramActivity extends ActionBarActivity {
 		return false;
 	}
 	
+	/**
+	 * Handles updates from the preference activity
+	 */
 	@Override
 	protected void onActivityResult (int requestCode, int resultCode, Intent intent) {
 	    //if (resultCode == Activity.RESULT_OK) {
@@ -240,8 +271,8 @@ public class SpectrogramActivity extends ActionBarActivity {
 
 	
 	/**
-	 * 
-	 * 
+	 * Initiates the recording service
+	 * Creates objects to handle recording and FFT processing
 	 */
 	private void loadEngine() {
 		
@@ -272,9 +303,9 @@ public class SpectrogramActivity extends ActionBarActivity {
 	
 	
 	/**
-	 * Receives sound buffers from the mic
-	 * Divide into buffer of size=resolution which are overlapped by 50%
-	 * Send these buffers for FFT processing
+	 * Called every time the microphone record a sample
+	 * Divide into smaller buffers (of size=resolution) which are overlapped by 50%
+	 * Send these buffers for FFT processing (call to process())
 	 */
 	private void getTrunks(short[] recordBuffer) {
 		int n = fftResolution;
@@ -298,7 +329,11 @@ public class SpectrogramActivity extends ActionBarActivity {
 		System.arraycopy(last, 0, first, 0, n/2);
 	}
 	
-	
+	/**
+	 * Processes the sound waves
+	 * Computes FFT
+	 * Update views
+	 */
 	private void process() {
 		int n = fftResolution;
 		int log2_n = (int) (Math.log(n)/Math.log(2));
@@ -337,7 +372,9 @@ public class SpectrogramActivity extends ActionBarActivity {
 	}
 	
 	
-
+	/**
+	 * Switch visibility of the views as user click on view headers
+	 */
 	public void onTimeViewHeaderClick(View view) {
 		System.out.println(timeView.getVisibility());
 		if (timeView.getVisibility() == View.GONE)	timeView.setVisibility(View.VISIBLE);
