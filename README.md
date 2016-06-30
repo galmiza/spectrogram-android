@@ -1,9 +1,9 @@
 ## Synopsis
 [Spectrogram-Android] is a native mobile application available on the Google Play store.   
 It was initially developed as a basic tool to study outdoor sound properties.  
-It is and will remain free and ad-free.
+It is and will remain free to use and ad-free.
 
-Key features
+Key features  
   - Realtime time view and frequency view
   - FFT size from 32 to 65536
   - Nine windowing functions
@@ -15,20 +15,20 @@ It uses native code (C code) to reduce FFT computation time. A JNI bridge define
 The code is very minimalist. Below the exhaustive list of source files.  
 
 ##### Java side code
-  - **SpectrogramActivity.java** (entry point of the application, renders TimeView and FrequencyView, has access to native code to process audio samples)
+  - **SpectrogramActivity.java** (entry point of the application, renders TimeView and FrequencyView, has access to native code to process audio samples, subscribes to audio recording service)
   - **PreferencesActivity.java** (simple interface to manage user preferences)
   - **TimeView.java** (wave signal rendering, shown on top of the application)
   - **FrequencyView.java** (spectrogram rendering, shown below the wave signal)
-  - **ContinuousRecord.java** (continuously records audio and triggers FFT computation and views update)
-  - **Misc.java** (various function to ease preference manipulation)
+  - **ContinuousRecord.java** (background service, continuously records audio, calls a callback for each sample recorded)
+  - **Misc.java** (various function to ease preferences manipulation)
 
 ##### Native side code
   - **SoundEngine.java** (JNI bridge in Java, list of Java methods that are implemented in C)
   - **jni.c** (JNI bridge in C, allows Java calls to be routed to C functions)
   - **main.c** (FFT, windowing ... all sound processing functions)
 
-Basically, an instance of ContinuousRecord is run at startup and continuously records audio sound from the microphone.   
-Using a callback, each sample is processed within SpectrogramActivity. Results are then sent to TimeView and FrequencyView. 
+Basically, an instance of ContinuousRecord is run at startup and continuously records audio samples from the microphone.   
+Using a callback, each sample is processed within SpectrogramActivity. Results are then sent to TimeView and FrequencyView which update their respective content. 
 
 ## Development
 Have killer features in mind you want to implement?  
