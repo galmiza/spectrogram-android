@@ -3,7 +3,7 @@
 It was initially developed as a basic tool to study outdoor sound properties.  
 It is and will remain free to use and ad-free.
 
-Key features  
+#### Key features  
   - Realtime time view and frequency view
   - FFT size from 32 to 65536
   - Nine windowing functions
