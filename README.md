@@ -10,8 +10,8 @@ It is and will remain free to use and ad-free.
   - Night/day and portrait/landscape modes
 
 ##### Snapshots
-![](https://ec2-52-49-133-53.eu-west-1.compute.amazonaws.com/git/spectrogram-android/P6SK2h4NB5FNzL846SNmUz7DpXHprgb8S9FfPVq4C5KmIq5QUeituv-_rdJLP9xhlsE%3Dh900-rw.png)
-![](https://ec2-52-49-133-53.eu-west-1.compute.amazonaws.com/git/spectrogram-android/5uldEiB_wBazRpAHSgWWwj-BGDf7Tb9kWbRdvzTpftnmkpbXDLkvFoNOkD-3BjaN5J4%3Dh900-rw.png)   
+![](http://ec2-52-49-133-53.eu-west-1.compute.amazonaws.com/git/spectrogram-android/P6SK2h4NB5FNzL846SNmUz7DpXHprgb8S9FfPVq4C5KmIq5QUeituv-_rdJLP9xhlsE%3Dh900-rw.png)
+![](http://ec2-52-49-133-53.eu-west-1.compute.amazonaws.com/git/spectrogram-android/5uldEiB_wBazRpAHSgWWwj-BGDf7Tb9kWbRdvzTpftnmkpbXDLkvFoNOkD-3BjaN5J4%3Dh900-rw.png)   
 
 
 ## Implementation
@@ -37,7 +37,7 @@ The code is very minimalist. Below the exhaustive list of source files.
 Basically, an instance of ContinuousRecord is run at startup and continuously records audio samples from the microphone.   
 Using a callback, each sample is processed within SpectrogramActivity. Results are then sent to TimeView and FrequencyView which update their respective content.  
 
-![](https://ec2-52-49-133-53.eu-west-1.compute.amazonaws.com/git/spectrogram-android/onbufferready-interaction.png)   
+![](http://ec2-52-49-133-53.eu-west-1.compute.amazonaws.com/git/spectrogram-android/onbufferready-interaction.png)   
 
 
 ## Development
