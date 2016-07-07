@@ -31,6 +31,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.app.ActivityCompat;
+import android.content.pm.PackageManager;
 
 /**
  * Entry point of the application
@@ -48,6 +51,7 @@ public class SpectrogramActivity extends ActionBarActivity {
 	// Constant
 	static final float PI = (float) Math.PI;
 	static final int INTENT_SETTINGS = 0;
+    static final int MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 0;
 	
 	// Attributes
 	private ActionBar actionBar;
@@ -111,12 +115,14 @@ public class SpectrogramActivity extends ActionBarActivity {
 		actionBar = getSupportActionBar();
 		actionBar.setTitle(getString(R.string.app_name));
 		actionBar.setSubtitle(getString(R.string.app_subtitle));
-		
-        // Load engine
-		loadEngine();
-		
-		// Headers
-		updateHeaders();
+
+		// Request record audio permission
+		if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+            loadEngine();
+            updateHeaders();
+        } else {
+			ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.RECORD_AUDIO}, MY_PERMISSIONS_REQUEST_RECORD_AUDIO);
+		}
 	}
 	
 	
@@ -170,6 +176,22 @@ public class SpectrogramActivity extends ActionBarActivity {
 		recorder.stop();
 	}
 
+    /**
+     * Handles response to permission request
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_RECORD_AUDIO: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    loadEngine();
+                    updateHeaders();
+                }
+                return;
+            }
+        }
+    }
+
 	/**
 	 * Handles interactions with the menu
 	 */
@@ -221,10 +243,11 @@ public class SpectrogramActivity extends ActionBarActivity {
 	    		// Notify view
 	    		frequencyView.setFFTResolution(fftResolution);
 	    		timeView.setFFTResolution(fftResolution);
-	    		
-	    		// Run engine again
-	    		loadEngine();
-	    		updateHeaders();
+
+                if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                    loadEngine();
+                    updateHeaders();
+                }
 	    		
 	    		// Update color mode
 	    		boolean nightMode = Misc.getPreference(this, "night_mode", false);
