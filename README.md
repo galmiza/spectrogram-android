@@ -34,6 +34,10 @@ $ jni/build.sh
 ```
   - Open Android Studio and import the project
   - Update *local.properties* with the path to your SDK and NDK
+```
+sdk.dir=/Users/guillaume/Library/Android/sdk
+ndk.dir=/usr/local/Cellar/android-ndk-r11c
+```
 
 Congratulations, you are ready to run the application!
 
