@@ -103,9 +103,9 @@ public class TimeView extends View {
 		else		 	paint.setColor(Color.WHITE);
     	float x1 = 0;
     	float y1 = height*(0.5f+0.5f*gain*wave[0]);
-    	for (int i=0; i<fftResolution/2-1; i++) {
-    		float x2 = width*(i+1)/(fftResolution/2);
-    		float y2 = height*(0.5f+0.5f*gain*wave[i+1]);
+    	for (int i=1; i<fftResolution; i++) {
+    		float x2 = width*i/(fftResolution);
+    		float y2 = height*(0.5f+0.5f*gain*wave[i]);
     		if ((x1>0 && x1<width) && (x2>0 && x2<width))
     			canvas.drawLine(x1, height-y1, x2, height-y2, paint);
     		x1 = x2;
