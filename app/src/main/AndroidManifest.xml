@@ -1,12 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.galmiza.android.spectrogram"
-    android:installLocation="auto"
-    android:versionCode="4"
-    android:versionName="1.1.1" >
+    android:installLocation="auto" >
 
-    <uses-sdk
-        android:minSdkVersion="9"
-        android:targetSdkVersion="24" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- <uses-permission android:name="android.permission.WAKE_LOCK" /> -->
 

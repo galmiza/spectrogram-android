@@ -13,8 +13,8 @@ android {
         applicationId "net.galmiza.android.spectrogram"
         minSdkVersion 9
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.1.1"
         jackOptions {
             enabled true
         }
