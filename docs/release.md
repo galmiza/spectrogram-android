@@ -24,8 +24,10 @@ texts in English and French, images in `en-US/images`. Play Console menu names m
 
 3. **Privacy policy.** GitHub Pages publishes the `docs/` folder of `master`, so
    `docs/privacy-policy.html` is live at https://galmiza.github.io/spectrogram-android/privacy-policy.html.
-   Enter that address under *Policy and programs → App content → Privacy policy*. The page must stay
-   reachable: keep the file name and the Pages setting.
+   Enter that address under *Monitor and improve → Policy and programs → App content → Privacy
+   policy*. Play also requires a link inside the app: *Settings → About → Privacy policy* opens
+   `privacy_policy_url` from `app/src/main/res/values/strings.xml`. The page must stay reachable:
+   keep the file name and the Pages setting, and update both places if the address changes.
 
 ## Each release
 
@@ -38,7 +40,7 @@ texts in English and French, images in `en-US/images`. Play Console menu names m
 4. Upload `app-release.aab` to *Internal testing* first, install it from Play on your phone, then
    promote the release to *Production*.
 5. If the listing changed, copy the texts and upload the screenshots from `fastlane/metadata/android`.
-   Screenshots must be at most twice as long as they are wide (1080×2160 works).
+   Phone screenshots must be 9:16 (1080×1920).
 
 ## Store screenshots
 
@@ -50,7 +52,7 @@ to a 16-bit mono 44.1 kHz WAV. To make new ones:
 adb push voice.wav /data/local/tmp/voice.wav
 adb shell run-as net.galmiza.android.spectrogram.debug sh -c 'mkdir -p files && cp /data/local/tmp/voice.wav files/'
 adb shell pm grant net.galmiza.android.spectrogram.debug android.permission.RECORD_AUDIO
-adb shell wm size 1080x2160   # Play accepts at most a 2:1 aspect ratio
+adb shell wm size 1080x1920   # Play requires 9:16 phone screenshots
 adb shell am start -S -n net.galmiza.android.spectrogram.debug/net.galmiza.android.spectrogram.MainActivity \
     --es test_audio /data/user/0/net.galmiza.android.spectrogram.debug/files/voice.wav
 android screen capture -o 1.png
@@ -68,17 +70,21 @@ Android's demo mode (`adb shell am broadcast -a com.android.systemui.demo -e com
 | Ads | No, the app has no ads |
 | App access | All functionality is available without special access |
 | Content rating | Category "Utility, Productivity, Communication, or Other"; every question "No" |
-| Target audience | 13–15, 16–17 and 18+ (not designed for children, so the Families policy does not apply) |
+| Target audience | 13–15, 16–17 and 18+ only: with a younger age group the Families policy applies |
 | News app | No |
 | Data safety | No data collected and no data shared: sound is analysed on the device only, settings stay on the device |
 | Advertising ID | No, the app does not use it |
-| Government, financial, health | No / none |
+| Financial features | My app doesn't provide any financial features |
+| Health apps | My app doesn't have any health features |
+| Government apps | No |
 
 The microphone permission (`RECORD_AUDIO`) needs no special declaration form.
 
 ## Getting the app back on Play
 
-Google removed version 1.1.1 for policy issues. Read each issue under *Policy and programs →
-Policy status* and fix it: likely candidates are the privacy policy link (galmiza.net was down),
-the Data safety form and the App content declarations above. Then upload version 2.0 (it targets
-API 37, above Play's minimum of 36) and send the changes for review from *Publishing overview*.
+Google removed version 1.1.1 under the Families policy: its target audience included children and
+its privacy policy link was broken. *Policy and programs → Policy status* also lists its target API
+(below 35 and 36). Version 2.0 targets API 37 and links the privacy policy, and the App content
+answers above leave the Families policy out. To restore the app, create a Production release with
+the 2.0 bundle (1.1.1 must end up under "Not included" on every track), roll it out to 100%, then
+send the changes for review from *Publishing overview*.
