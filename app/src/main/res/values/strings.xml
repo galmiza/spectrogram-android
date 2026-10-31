@@ -22,6 +22,10 @@
     <string name="settings_color_scale">Color scale</string>
     <string name="settings_keep_screen_on">Keep screen on</string>
     <string name="settings_keep_screen_on_summary">Prevent screen from going to sleep</string>
+    <string name="settings_about">About</string>
+    <string name="settings_privacy_policy">Privacy policy</string>
+    <string name="settings_privacy_policy_summary">Sound is analysed on your device, never recorded or sent</string>
+    <string name="privacy_policy_url" translatable="false">https://galmiza.github.io/spectrogram-android/privacy-policy.html</string>
     <string name="scale_linear">Linear</string>
     <string name="scale_logarithmic">Logarithmic</string>
 </resources>

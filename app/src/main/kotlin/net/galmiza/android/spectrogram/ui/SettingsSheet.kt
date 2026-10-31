@@ -21,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import net.galmiza.android.spectrogram.R
@@ -61,6 +62,16 @@ fun SettingsList(settings: Settings, onChange: (Settings) -> Unit, modifier: Mod
             supportingContent = { Text(stringResource(R.string.settings_keep_screen_on_summary)) },
             trailingContent = { Switch(checked = settings.keepScreenOn, onCheckedChange = null) },
             modifier = Modifier.clickable { onChange(settings.copy(keepScreenOn = !settings.keepScreenOn)) },
+        )
+
+        Section(R.string.settings_about)
+        val uriHandler = LocalUriHandler.current
+        val privacyPolicyUrl = stringResource(R.string.privacy_policy_url)
+        ListItem(
+            headlineContent = { Text(stringResource(R.string.settings_privacy_policy)) },
+            supportingContent = { Text(stringResource(R.string.settings_privacy_policy_summary)) },
+            // runCatching: openUri throws if no app can open web links
+            modifier = Modifier.clickable { runCatching { uriHandler.openUri(privacyPolicyUrl) } },
         )
     }
 }

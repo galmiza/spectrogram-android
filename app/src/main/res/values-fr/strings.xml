@@ -20,6 +20,9 @@
     <string name="settings_color_scale">Palette de couleurs</string>
     <string name="settings_keep_screen_on">Garder l\'écran allumé</string>
     <string name="settings_keep_screen_on_summary">Empêcher la mise en veille</string>
+    <string name="settings_about">À propos</string>
+    <string name="settings_privacy_policy">Règles de confidentialité</string>
+    <string name="settings_privacy_policy_summary">Le son est analysé sur votre appareil, jamais enregistré ni envoyé</string>
     <string name="scale_linear">Linéaire</string>
     <string name="scale_logarithmic">Logarithmique</string>
 </resources>
