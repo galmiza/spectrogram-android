@@ -1,0 +1,14 @@
+Spectrogram shows the sound picked up by your microphone in real time: the waveform at the top and, below it, a scrolling spectrogram of every frequency up to 22 kHz.
+
+• FFT resolution from 32 to 65536 points
+• 9 window functions to reduce spectral leakage: Rectangular, Triangular, Welch, Hanning, Hamming, Blackman, Nuttall, Blackman-Nuttall, Blackman-Harris
+• Linear or logarithmic frequency scale
+• 4 color palettes: Fire, Ice, Grey, Rainbow
+• Pause and resume at any time; drag vertically on the waveform to zoom
+• Follows your phone's light or dark theme
+
+The sound is analysed on your device only: nothing is recorded, stored or sent.
+
+Levels are relative to the loudest sound the microphone can capture. They are not absolute sound pressure levels, which would require calibrating each phone's microphone.
+
+Free and ad-free. Source code: https://github.com/galmiza/spectrogram-android

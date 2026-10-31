@@ -1,0 +1,7 @@
+# Keep LF line endings whatever core.autocrlf says (gradlew breaks with CRLF)
+* text=auto eol=lf
+# Windows scripts need CRLF
+*.bat text eol=crlf
+# Binary files
+*.jar binary
+*.png binary

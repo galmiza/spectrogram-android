@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The spectrogram texture of the original icon, inset to the 72dp area that launchers show -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@android:color/black" />
+    <item
+        android:bottom="18dp"
+        android:drawable="@drawable/launcher_texture"
+        android:left="18dp"
+        android:right="18dp"
+        android:top="18dp" />
+</layer-list>

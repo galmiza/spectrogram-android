@@ -6,69 +6,35 @@ It is and will remain free to use and ad-free.
 
 ##### Key features  
 
-  - Realtime time view and frequency view of surrouding sound
+  - Realtime waveform and scrolling spectrogram of the surrounding sound
   - FFT size from 32 to 65536
-  - Nine windowing functions
-  - Night/day and portrait/landscape modes
+  - Nine window functions
+  - Linear or logarithmic frequency scale, four color palettes
+  - Light/dark theme (follows the system), portrait and landscape
+  - Sound is analysed on the device only: nothing is recorded or sent ([privacy policy](docs/privacy-policy.html))
 
 ##### Snapshots
-  
+
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="240"> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="240"> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="240">
+
+*Version 2.0, analysing a LibriVox reading of Poe's "The Raven" (public domain). Store listing texts and images are in `fastlane/metadata/android/`.*
 
 
-## Installation and configuration
+## Build and run
 
-##### Installation
+Version 2 is written in Kotlin with Jetpack Compose, with no native code. To set up a Mac with
+the Android SDK, the `android` command-line tool and an emulator, follow
+[docs/dev-setup.md](docs/dev-setup.md). Then:
 
-  - Install Android Studio 2.3.2, Android SDK and Android NDK
-  - From the "Android SDK Manager", install the libraries
-    - "Android Support Library (Obsolete)"
-    - "Android Support Repository" 
-
-##### Configuration
-  - Clone the repository
 ```sh
-$ git clone https://galmiza@bitbucket.org/galmiza/spectrogram-android.git
-```
-  - Define SDK location
-```sh
-export ANDROID_SDK=$HOME/Library/Android/sdk
-```
-  - Open Android Studio and import the project
-  - Update *local.properties* with the path to your SDK
-```
-sdk.dir=$ANDROID_SDK
+./gradlew assembleDebug
+android emulator start medium_phone
+android run app
 ```
 
-Congratulations, you are ready to run the application!
-
-
-## Implementation
-
-The application follows Android guidelines in terms of Activity lifecycle, View inflation and Preferences management.  
-It uses native code (C code) to reduce FFT computation time. A JNI bridge defines the binding between Java methods and C functions.  
-The code is very minimalist. Below the exhaustive list of source files.  
-
-**Edit**:  
-Note that the C code and JNI bridge have been moved into the dedicated repository *sound-engine-android*. They are now packaged into .so files and a .jar file attached to this project.
-
-##### Java side code
-
-  - **SpectrogramActivity.java** (entry point of the application, renders TimeView and FrequencyView, has access to native code to process audio samples, subscribes to audio recording service)
-  - **PreferencesActivity.java** (simple interface to manage user preferences)
-  - **TimeView.java** (wave signal rendering, shown on top of the application)
-  - **FrequencyView.java** (spectrogram rendering, shown below the wave signal)
-  - **ContinuousRecord.java** (background service, continuously records audio, calls a callback for each sample recorded)
-  - **Misc.java** (various function to ease preferences manipulation)
-
-##### Native side code
-
-  - **SoundEngine.java** (JNI bridge in Java, list of Java methods that are implemented in C)
-  - **jni.c** (JNI bridge in C, allows Java calls to be routed to C functions)
-  - **main.c** (FFT, windowing ... all sound processing functions)
-
-
-Basically, an instance of ContinuousRecord is run at startup and continuously records audio samples from the microphone.   
-Using a callback, each sample is processed within SpectrogramActivity. Results are then sent to TimeView and FrequencyView which update their respective content.  
+Tests and other commands are listed in [CLAUDE.md](CLAUDE.md); releasing to Google Play is
+described in [docs/release.md](docs/release.md). Version 1 (Java with a C/JNI FFT engine) is in
+the git history.
 
 
 ## Development
@@ -78,7 +44,6 @@ You are very welcome to contribute to the project!
 ## Todo
   - Add extra languages
   - Add frequency range filter
-  - Add unit test cases (yeah I know...)
   - Add ability to play sound from the spectrogram
   - Add high resolution spectrogram export feature
 

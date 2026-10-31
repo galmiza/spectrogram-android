@@ -1,0 +1,14 @@
+Spectrogram affiche en temps réel le son capté par le micro : la forme d'onde en haut et, en dessous, un spectrogramme défilant de toutes les fréquences jusqu'à 22 kHz.
+
+• Résolution FFT de 32 à 65536 points
+• 9 fenêtres de pondération pour limiter les fuites spectrales : Rectangular, Triangular, Welch, Hanning, Hamming, Blackman, Nuttall, Blackman-Nuttall, Blackman-Harris
+• Échelle de fréquence linéaire ou logarithmique
+• 4 palettes de couleurs : Fire, Ice, Grey, Rainbow
+• Pause et reprise à tout moment ; glissez verticalement sur la forme d'onde pour zoomer
+• Suit le thème clair ou sombre de votre téléphone
+
+Le son est analysé uniquement sur votre appareil : rien n'est enregistré, conservé ni envoyé.
+
+Les niveaux sont relatifs au son le plus fort que le micro peut capter. Ce ne sont pas des niveaux de pression acoustique absolus, qui nécessiteraient d'étalonner le micro de chaque téléphone.
+
+Gratuit et sans publicité. Code source : https://github.com/galmiza/spectrogram-android
