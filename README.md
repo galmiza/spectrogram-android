@@ -11,18 +11,18 @@ It is and will remain free to use and ad-free.
   - Nine window functions
   - Linear or logarithmic frequency scale, four color palettes
   - Light/dark theme (follows the system), portrait and landscape
-  - Sound is analysed on the device only: nothing is recorded or sent ([privacy policy](docs/privacy-policy.html))
+  - Sound is analysed on the device only: nothing is recorded or sent ([privacy policy](https://galmiza.github.io/spectrogram-android/privacy-policy.html))
 
 ##### Snapshots
 
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="240"> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="240"> <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="240">
 
-*Version 2.0, analysing a LibriVox reading of Poe's "The Raven" (public domain). Store listing texts and images are in `fastlane/metadata/android/`.*
+*Analysing a LibriVox reading of Poe's "The Raven" (public domain). Store listing texts and images are in `fastlane/metadata/android/`.*
 
 
 ## Build and run
 
-Version 2 is written in Kotlin with Jetpack Compose, with no native code. To set up a Mac with
+The app is written in Kotlin with Jetpack Compose. To set up a Mac with
 the Android SDK, the `android` command-line tool and an emulator, follow
 [docs/dev-setup.md](docs/dev-setup.md). Then:
 
@@ -33,8 +33,7 @@ android run app
 ```
 
 Tests and other commands are listed in [CLAUDE.md](CLAUDE.md); releasing to Google Play is
-described in [docs/release.md](docs/release.md). Version 1 (Java with a C/JNI FFT engine) is in
-the git history.
+described in [docs/release.md](docs/release.md).
 
 
 ## Development

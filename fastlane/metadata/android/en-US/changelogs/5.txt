@@ -1,6 +1,6 @@
 Version 2.0, rewritten for today's Android:
 • New design that follows your light or dark theme
 • Smoother spectrogram that scrolls at a constant speed
-• Corrected Blackman, Nuttall and Blackman-Harris windows
+• Corrected Blackman, Nuttall, Blackman-Nuttall and Blackman-Harris windows
 • The microphone stops as soon as the app leaves the screen
 • Your settings are kept

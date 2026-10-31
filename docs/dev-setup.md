@@ -10,7 +10,7 @@ piece is there. Written for macOS on Apple Silicon, October 2026.
 | Tool | Version | Why |
 |---|---|---|
 | [Homebrew](https://brew.sh) | – | Installs and updates the command-line tools below. |
-| `android-commandlinetools` (Homebrew cask) | 22.0 | Provides `android`, Google's Android CLI (2026). It installs SDK packages, creates and starts emulators, takes screenshots and dumps the UI tree. It replaces `sdkmanager` and `avdmanager`, which now print a deprecation warning, and it is built to be driven by coding agents such as Claude Code. |
+| `android-commandlinetools` (Homebrew cask) | 22.0 (`android` 1.1) | Provides `android`, Google's Android CLI (2026). It installs SDK packages, creates and starts emulators, takes screenshots and dumps the UI tree. It replaces `sdkmanager` and `avdmanager`, which now print a deprecation warning, and it is built to be driven by coding agents such as Claude Code. |
 | Android SDK in `~/Library/Android/sdk` | – | The default location used by the `android` CLI and by Android Studio. |
 | ↳ `platforms/android-37.0` | Android 17 | The app compiles against and targets API 37. Google Play has required API 36 or higher for app updates since 31 Aug 2026. |
 | ↳ `build-tools/37.0.0` | 37.0.0 | `aapt2`, `zipalign`, `apksigner`, used by the build and for checking signatures. |
@@ -39,9 +39,8 @@ export ANDROID_HOME="$HOME/Library/Android/sdk"
 
 `android init` installs Google's `android-cli` skill for every coding agent it
 finds on the machine (Claude Code, Codex, Copilot…). Run `android skills list`
-for the other official skills. The ones this project will use are
-`testing-setup`, `edge-to-edge` and `play-policy-insights`; they get added when
-the corresponding work starts.
+for the other official skills (for example `play-policy-insights`); none of them
+is required for this project.
 
 ## Daily use
 
@@ -49,7 +48,7 @@ the corresponding work starts.
 android emulator start medium_phone            # returns once booted; add --headless for no window
 adb devices                                    # should list emulator-5554
 android screen capture -o screen.png           # screenshot
-android layout                                 # UI tree as JSON (what agents read)
+android layout --no-idle                       # UI tree as JSON (--no-idle: the app redraws every frame)
 android emulator stop medium_phone
 ```
 
@@ -96,5 +95,6 @@ real phone.
 - **`sdkmanager` / `avdmanager`** still work but are deprecated. Use
   `android sdk …` and `android emulator …` instead.
 - **16 KB page-size images aren't needed.** The standard emulator image uses
-  4 KB memory pages. Google Play's 16 KB requirement only concerns apps that
-  ship native (C/C++) libraries, and the rewritten app won't have any.
+  4 KB memory pages. Google Play's 16 KB requirement only concerns native
+  (C/C++) libraries. The app has no C code; its only native library is a tiny
+  one from Compose (`libandroidx.graphics.path.so`), already 16 KB aligned.

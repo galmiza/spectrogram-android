@@ -1,7 +1,7 @@
 # Releasing to Google Play
 
-Package: `net.galmiza.android.spectrogram`. Store listing texts and images are in
-`fastlane/metadata/android/` (English and French). Play Console menu names may vary slightly.
+Package: `net.galmiza.android.spectrogram`. The store listing is in `fastlane/metadata/android/`:
+texts in English and French, images in `en-US/images`. Play Console menu names may vary slightly.
 
 ## One-time setup
 
@@ -22,9 +22,10 @@ Package: `net.galmiza.android.spectrogram`. Store listing texts and images are i
    integrity → Play app signing*. If the app is not enrolled yet, choose to use your existing app
    signing key and follow the steps (Google's PEPK tool encrypts the key for upload).
 
-3. **Privacy policy.** Publish `docs/privacy-policy.html` at a stable HTTPS address (for example
-   with GitHub Pages, or on galmiza.net) and enter it under *Policy and programs → App content →
-   Privacy policy*. Not a PDF; the page must stay reachable.
+3. **Privacy policy.** GitHub Pages publishes the `docs/` folder of `master`, so
+   `docs/privacy-policy.html` is live at https://galmiza.github.io/spectrogram-android/privacy-policy.html.
+   Enter that address under *Policy and programs → App content → Privacy policy*. The page must stay
+   reachable: keep the file name and the Pages setting.
 
 ## Each release
 
@@ -48,6 +49,7 @@ to a 16-bit mono 44.1 kHz WAV. To make new ones:
 ```sh
 adb push voice.wav /data/local/tmp/voice.wav
 adb shell run-as net.galmiza.android.spectrogram.debug sh -c 'mkdir -p files && cp /data/local/tmp/voice.wav files/'
+adb shell pm grant net.galmiza.android.spectrogram.debug android.permission.RECORD_AUDIO
 adb shell wm size 1080x2160   # Play accepts at most a 2:1 aspect ratio
 adb shell am start -S -n net.galmiza.android.spectrogram.debug/net.galmiza.android.spectrogram.MainActivity \
     --es test_audio /data/user/0/net.galmiza.android.spectrogram.debug/files/voice.wav

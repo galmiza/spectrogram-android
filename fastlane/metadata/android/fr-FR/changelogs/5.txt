@@ -1,6 +1,6 @@
 Version 2.0, réécrite pour l'Android d'aujourd'hui :
 • Nouveau design qui suit votre thème clair ou sombre
 • Spectrogramme plus fluide, qui défile à vitesse constante
-• Fenêtres Blackman, Nuttall et Blackman-Harris corrigées
+• Fenêtres Blackman, Nuttall, Blackman-Nuttall et Blackman-Harris corrigées
 • Le micro s'arrête dès que l'application quitte l'écran
 • Vos réglages sont conservés

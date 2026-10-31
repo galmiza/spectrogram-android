@@ -1,14 +1,16 @@
 # Spectrogram (Android)
 
-Realtime spectrogram app, published on Google Play as `net.galmiza.android.spectrogram`.
-It is being rewritten from the 2013–2019 Java + JNI app to Kotlin + Jetpack Compose.
+Realtime spectrogram app in Kotlin and Jetpack Compose, published on Google Play as
+`net.galmiza.android.spectrogram`.
 
 ## Rules
 
-- Commit each step on the local `modernize` branch. Never commit to `master`, never push.
+- Work on a local branch and commit each step there. The owner commits to `master` and pushes.
+- Commit messages are one-line Conventional Commits: `feat(ui): …`, `fix(dsp): …`, `docs: …`.
 - Never commit signing keys, passwords or Play service-account files.
 - Keep it simple: one Gradle module, no DI or navigation library unless a real need appears.
-- Keep the `applicationId` and keep `versionCode` above 4 (the last Play release).
+- Never change the `applicationId`; increase `versionCode` for every Play upload.
+- Never change the settings keys or value formats: installed apps already have settings saved with them.
 
 ## Stack
 
@@ -23,6 +25,7 @@ itself (`gradle/gradle-daemon-jvm.properties`). Tool setup: `docs/dev-setup.md`.
 ./gradlew lintDebug                          # Android Lint
 android emulator start --headless medium_phone
 android run app                              # build, install and launch on the running emulator
+adb shell pm grant net.galmiza.android.spectrogram.debug android.permission.RECORD_AUDIO   # skip the permission screen
 adb shell am start -S -n net.galmiza.android.spectrogram.debug/net.galmiza.android.spectrogram.MainActivity \
     --ez test_signal true                    # debug build: analyse a test signal instead of the mic
     # or --es test_audio <path to a 16-bit mono 44.1 kHz WAV readable by the app>, played in a loop
@@ -58,23 +61,18 @@ use the test signal there and a real phone for microphone checks.
 - CI (`.github/workflows/ci.yml`) runs all of them; screenshot tests run on macOS, where the
   references are recorded.
 
-## Legacy reference
+## Code
 
-The old implementation is on `master` (until the rewrite is merged):
-`git show master:app/src/main/java/net/galmiza/android/spectrogram/SpectrogramActivity.java`.
-The C DSP code (FFT, window functions) is in https://bitbucket.org/galmiza/sound-engine-android
-(`jni/main.c`). Old strings and French translations: `git show master:app/src/main/res/values-fr/strings.xml`.
+All in `app/src/main/kotlin/net/galmiza/android/spectrogram/`:
 
-## Roadmap
+- `dsp/`: FFT, window functions, 50% overlap framing, magnitudes, and the test signal. Plain
+  Kotlin, unit tested on the JVM.
+- `audio/Recorder`: reads the microphone (or, in debug builds, a test source such as `WavLoop`)
+  on a background thread and turns it into spectra.
+- `ui/SpectrogramScreen`: top bar, permission flow, recording that follows the screen's lifecycle.
+  `WaveformView`, `SpectrogramView` (scrolling bitmap, one column per spectrum), `SettingsSheet`,
+  color and frequency scales. `SpectrogramPreviews` renders the test signal for `@Preview`.
+- `Settings`: user settings in SharedPreferences.
 
-1. Skeleton build (done)
-2. DSP in Kotlin (`dsp/`: FFT, windows, 50% overlap framing, magnitudes) and color scales, with JVM
-   unit tests; matches the C engine except for its window bugs (done). Previews in `ui/SpectrogramPreviews.kt`
-   render a synthetic signal through it.
-3. App (done): `audio/Recorder` (mic or test signal, background thread), `ui/SpectrogramScreen`
-   (top bar, permission flow, lifecycle-aware start/stop), `WaveformView`, `SpectrogramView`
-   (scrolling bitmap, one column per spectrum), `SettingsSheet`; `Settings` keeps version 1's keys
-4. Screenshot tests, one device smoke test, GitHub Actions (done)
-5. Release (prepared): R8 + resource shrinking, signing from `~/.gradle/gradle.properties`,
-   adaptive icon, privacy policy (`docs/privacy-policy.html`), store listing in `fastlane/metadata`.
-   Steps and Play Console answers: `docs/release.md`. Remaining: upload and Play Console (the user).
+Releasing (signing, store listing in `fastlane/metadata`, privacy policy `docs/privacy-policy.html`
+served by GitHub Pages, Play Console answers): `docs/release.md`.
